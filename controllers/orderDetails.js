@@ -3,10 +3,23 @@ const mysql = require("mysql");
 const pool = require("../sql/connection");
 const { handleSQLError } = require("../sql/error"); 
 
-const getAllUsers = (req, res) => {
-    let sql = "SELECT * FROM user_info"
-    console.log(req.user_id)
-    
+//get all orderDetails
+
+const getAllOrderDetails = (req, res) => {
+    let sql = "SELECT * FROM order_details"
+
+    pool.query(sql, (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json(rows);
+    })
+};
+
+
+//get orderDetails by order_id
+const getOrderById = (req, res) => {
+    let sql = "SELECT * FROM order_details WHERE order_num = ?"
+    sql = mysql.format(sql, [req.params.order_num])
+
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
         return res.json(rows);
@@ -14,15 +27,13 @@ const getAllUsers = (req, res) => {
 };
 
 
-const getUserById = (req, res) => {
-    let sql = "SELECT * FROM user_info WHERE user_id = ?"
-    sql = mysql.format(sql, [req.params.id])
 
-    pool.query(sql, (err, rows) => {
-        if (err) return handleSQLError(res, err)
-        return res.json(rows);
-    })
-};
+
+
+
+
+
+
 
 
 
@@ -31,6 +42,6 @@ const getUserById = (req, res) => {
 
 
 module.exports = {
-    getUserById,
-    getAllUsers
+    getAllOrderDetails,
+    getOrderById
 }
