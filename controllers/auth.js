@@ -8,7 +8,7 @@ const { handleSQLError } = require('../sql/error')
 
 const saltRounds = 10
 
-const signup = async(req, res) => {
+  const signup = async(req, res) => {
     const { user_email, user_password } = req.body
     let sql = "INSERT INTO user_info (user_email, user_password) VALUES (?, ?)"
 
@@ -21,7 +21,7 @@ const signup = async(req, res) => {
         if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('user_email is taken')
         return handleSQLError(res, err)
       }
-      return res.send('Sign-up successful')
+        return res.send('Sign-up successful')
     })
   }
 

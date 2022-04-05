@@ -19,4 +19,3 @@ The primary key is order_num and the foreign keys are user_id and shirt_id.
 
 The third table is the order_items table. This contains shirt_id, shirt_name, shirt_quantity, and shirt_price. The primary key is shirt_id. 
 
-# 

@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const pool = require("../sql/connection");
 const { handleSQLError } = require("../sql/error"); 
 
-//get all orderDetails
+
 
 const getAllOrderDetails = (req, res) => {
     let sql = "SELECT * FROM order_details"
@@ -15,7 +15,6 @@ const getAllOrderDetails = (req, res) => {
 };
 
 
-//get orderDetails by order_id
 const getOrderById = (req, res) => {
     let sql = "SELECT * FROM order_details WHERE order_num = ?"
     sql = mysql.format(sql, [req.params.order_num])
@@ -25,17 +24,6 @@ const getOrderById = (req, res) => {
         return res.json(rows);
     })
 };
-
-
-
-
-
-
-
-
-
-
-
 
 
 
