@@ -25,11 +25,17 @@ const saltRounds = 10
     })
   }
 
-  const login = (req, res) => {
+  const login = async (req, res) => {
     const { user_email, user_password } = req.body
+    console.log("ATTEMPTING USER LOGIN")
     let sql = "SELECT * FROM user_info WHERE user_email = ?"
     sql = mysql.format(sql, [ user_email ])
   
+    // //**************************************** */
+    // const newHash = await argon2.hash(user_password)
+    // console.log("THIS IS THE NEW HASH", newHash)
+    //**************************************** */
+
     pool.query(sql, async(err, rows) => {
       if (err) return handleSQLError(res, err)
       if (!rows.length) return res.status(404).send('No matching users')
@@ -39,6 +45,7 @@ const saltRounds = 10
       let match = await argon2.verify(hash, user_password)
       if (!match) {
         res.status(401).json({msg: "Your password does not match."})
+      return   
       } 
       
       let unsignedToken = {
@@ -54,6 +61,8 @@ const saltRounds = 10
       } )
     }) 
   };
+
+
 
   const checkJWT = async (req, res, next) => {
     if (!req.headers.authorization) {
