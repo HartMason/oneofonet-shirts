@@ -11,7 +11,7 @@ const saltRounds = 10
   const signup = async(req, res) => {
     const { user_email, user_password } = req.body
     let sql = "INSERT INTO user_info (user_email, user_password) VALUES (?, ?)"
-
+    console.log(user_password, "USER PASSSSSWORD")
     let hash = await argon2.hash(user_password) 
     console.log(hash)
 
@@ -28,8 +28,11 @@ const saltRounds = 10
   const login = async (req, res) => {
     const { user_email, user_password } = req.body
     console.log("ATTEMPTING USER LOGIN")
+    console.log(req.body)
+    console.log( user_email, "user_email", user_password, "user_password" )
     let sql = "SELECT * FROM user_info WHERE user_email = ?"
     sql = mysql.format(sql, [ user_email ])
+    console.log("sql", sql)
   
     // //**************************************** */
     // const newHash = await argon2.hash(user_password)
@@ -41,7 +44,9 @@ const saltRounds = 10
       if (!rows.length) return res.status(404).send('No matching users')
   
       const hash = rows[0].user_password
-      console.log(hash)
+      console.log("HASH", hash) 
+      console.log("USER PASSWORD", user_password)
+      console.log(typeof hash)
       let match = await argon2.verify(hash, user_password)
       if (!match) {
         res.status(401).json({msg: "Your password does not match."})

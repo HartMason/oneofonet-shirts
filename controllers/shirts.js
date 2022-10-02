@@ -5,7 +5,7 @@ const { handleSQLError } = require("../sql/error");
 
 const getAllShirts = (req, res) => {
     let sql = "SELECT * FROM order_items"
-
+    console.log("GET ALL SHIRTS***************")
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
         return res.json(rows);
