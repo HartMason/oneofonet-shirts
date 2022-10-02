@@ -11,11 +11,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use(
-  express.json({
-    type: ["application/json", "text/plain"],
-  })
-);
+// app.use(
+//   express.json({
+//     type: ["application/json", "text/plain"],
+//   })
+// );
 app.use("/users", usersRouter);
 app.use("/shirts", shirtsRouter);
 app.use("/orderDetails", orderDetailsRouter);
