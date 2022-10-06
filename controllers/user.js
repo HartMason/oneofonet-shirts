@@ -5,7 +5,7 @@ const { handleSQLError } = require("../sql/error");
 
 const getAllUsers = (req, res) => {
     let sql = "SELECT * FROM user_info"
-    console.log(req.user_id)
+
     
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
